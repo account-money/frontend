@@ -4,11 +4,13 @@ import history from '../../history';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function CategoriesExpense() {
+    const [categoriesFilter, setCategoriesFilter] = useState([]);
     const [categories, setCategories] = useState([]);
     async function getData(){
       const id = JSON.parse(localStorage.getItem('id')) 
-      const {data} = await api.get(`/expense-category`)
+      const {data} = await api.get(`/expense-category/by-user/${id}`)
       setCategories(data)
+      setCategoriesFilter(data)
     }
     useEffect(() => {
       getData()
@@ -32,13 +34,16 @@ export default function CategoriesExpense() {
                 }}>Adicionar categoria</button>
             </Link>
             <div style={{overflowY: 'scroll', width: '100%', maxHeight: '40vh'}}>
+            <input placeholder='Nome...' onChange={(e) => {
+              setCategoriesFilter(categories.filter(categorie => categorie.name.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase())))
+            }}/>
             <h2>Categorias de Despesas</h2>
             <table style={{borderSpacing: '0'}}>
               <tr style={{border: '1px solid black'}}>
                 <th style={{border: '1px solid black'}}>Nome</th>
                 <th style={{border: '1px solid black'}}>Ações</th>
               </tr>
-            {categories.map(categorie => {
+            {categoriesFilter.map(categorie => {
 
                   return (
                     < >

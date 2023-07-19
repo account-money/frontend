@@ -16,6 +16,8 @@ import CategoriesExpense from './pages/CategoriesExpense';
 import Card from './pages/Card';
 import CardAdd from './pages/CardAdd';
 import Profile from './pages/Profile';
+import Invoice from './pages/Invoice';
+import Statistic from './pages/Statistic';
 
 function CustomRoute({ isPrivate, ...rest }) {
   const { loading, authenticated } = useContext(Context);
@@ -47,6 +49,8 @@ export default function Routes() {
       <CustomRoute isPrivate exact path="/expense-categories-update/:id" component={CategoriesExpenseUpdate} />
       <CustomRoute isPrivate exact path="/card" component={Card} />
       <CustomRoute isPrivate exact path="/card-add" component={CardAdd} />
+      <CustomRoute isPrivate exact path="/card-invoice/:id" component={Invoice} />
+      <CustomRoute isPrivate exact path="/statistic" component={Statistic} />
     </Switch>
   );
 }
